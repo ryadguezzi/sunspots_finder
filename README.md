@@ -1,0 +1,1 @@
+# sunspots_finder
