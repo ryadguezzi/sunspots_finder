@@ -6,7 +6,7 @@ The .py files are the ones that matter if you want get started fast. The noteboo
 In both methods, the output will be the sunspots in terminal and an image with visual markers in the results folder (the output folder can be changed).
 
 
-#### Scraping data
+### Scraping data
 
 Data images are used for two purposes : testing the methods with examples and training method 2. Images come from NASA, they are HMI Intensitygrams, flattened, orange in 1024x1024 format. Only January 2025 images were scraped for this project. You can access them for free at https://sdo.gsfc.nasa.gov/assets/img/browse/2025/01/.  
 Note that no labels are given with the images. The performances are left to the appreciation of the users, and the AI techniques must be unsupervised.  
@@ -15,9 +15,9 @@ The notebook scrap.ipynb can be executed to download all relevant images to the 
 Requires bs4.  
 
 
-#### Method 1
+### Method 1
 
-##### Get started
+#### Get started
 
 Execute:
 
@@ -31,20 +31,20 @@ You can also add optional arguments output_folder, threshold_ratio and min_area:
 python Method1/method1.py --input_path 'images\20250110_164500_1024_HMIIF.jpg' --output_folder 'Method1/results' --threshold_ratio 0.88 --min_area 7
 ```
 
-##### Description
+#### Description
 
 A threshold is determined, proportionally to the average intensity of the sun on the image (taking into account only pixels bright enough). A coefficient of 0.88 was found to provide the best results, and is the default value but can be changed as an optional argument.
 The proportional thresholds guarantees robustness to a certain point : even if the image is overall less bright for some reason (instruments changing or special solar conditions) the method should work.  
 Then the connected components are determined, and the holes are filled. Only spots large enough are considered, so the method is not sensible to noise. The minimum area is 7 by default, as it was found to yield the best results, but it is also an optional argument that can be changed when calling the method.  
 The borders of these components are also determined, as to make visual markers for verification. The image with markers is stored in the results folder.
 
-##### Known limitation
+#### Known limitation
 
 If a sunspot is on the very edge of the sun, it possibly can be ignored. This can be fixed easily with skImage segmentation tools, for example chan_vese with a very high mu value can delimit the sun very well. I didn't have time to implement this.
 
-#### Method 2
+### Method 2
 
-##### Get started
+#### Get started
 Execute:
 
 ```
@@ -58,7 +58,7 @@ python Method2/method2.py --input_path 'images\20250110_164500_1024_HMIIF.jpg' -
 ```
 
 
-##### Description
+#### Description
 
 The straightforward method 1 seems to work well, but comparing it with deep learning techniques might reveal insights.   
 This method implements a convolutional neural network aimed at a segmentation task. It produces a binary mask that detects sunspots. The architecture uses classical components of CNNs, and is not very deep (2 encooding and 2 decoding layers) because the task is a priori not too complex.  
@@ -70,7 +70,7 @@ Only spots of area greater than some value (by default 3 but can be changed) are
 
 The model was unsupervisedly trained on scraped data from NASA.  
 
-##### Known limitations and things to do
+#### Known limitations and things to do
 - For now, the model transforms the image to a 256x256 at the very beggining, meaning the result would not be very accurate for the computation of areas. This reduction was necessary to limit training time on my local computer, but can be fixed  
 
 - Different hyperparameters should be tested (min_area and threshold)  
@@ -79,6 +79,6 @@ The model was unsupervisedly trained on scraped data from NASA.
 - We should provide a detailed comparison with method 1
 - Method1 can be useful to label data so that a supervised CNN model may be used instead. 
 
-### Requirements
+## Requirements
 
 MatPlotLib, Numpy, SkImage, CV2, PyTorch, PIL
