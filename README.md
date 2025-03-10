@@ -74,11 +74,11 @@ The model was unsupervisedly trained on scraped data from NASA.
 - For now, the model transforms the image to a 256x256 at the very beggining, meaning the result would not be very accurate for the computation of areas. This reduction was necessary to limit training time on my local computer, but can be fixed  
 
 - Different hyperparameters should be tested (min_area and threshold)  
-
 - The model should be trained on more images, with different colors and intensities for better robustness.
 - We should provide a detailed comparison with method 1
 - Method1 can be useful to label data so that a supervised CNN model may be used instead. 
 
 ## Requirements
+Code was executed with the following versions:
 
-MatPlotLib, Numpy, SkImage, CV2, PyTorch, PIL
+MatPlotLib 3.5.0, Numpy 1.26.4, Scikit-Image 0.21.0, CV2 4.7.0.72, PyTorch 2.5.1+cu118, PIL 11.1.0

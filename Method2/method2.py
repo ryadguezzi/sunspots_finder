@@ -142,7 +142,7 @@ def analyze_sunspots(results, min_area, output_folder):
     
     
     # Superpose borders
-    border_superposed = cv2.addWeighted(original_image, 0.8, border_mask, 1, 0)
+    border_superposed = cv2.addWeighted(original_image, 0.6, border_mask, 1, 0)
     
     # Print analysis
     print(f'Number of sunspots: {len(regionprops)}')

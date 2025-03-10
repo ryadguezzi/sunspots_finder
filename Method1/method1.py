@@ -77,16 +77,16 @@ def main():
 
     # print(image_color.shape, border_mask.shape)
     # Superpose the borders on the original image
-    border_superposed = cv2.addWeighted(image_color, 0.8, border_mask, 1, 0)
+    border_superposed = cv2.addWeighted(image_color, 0.6, border_mask, 1, 0)
 
     # Display the analysis
-    print(f'Number of sunspots: {len(regionprops)//2}')
+    print(f'Number of sunspots: {len(regionprops)}')
     print('')
     for i in range(len(regionprops)):
-        if True or i%2 == 0: #For some reason each label is repeated 
-            print(f'Sunspot {i//2 + 1}: {int(regionprops[i].area_filled)} pixels')
+        if True or i%2 == 0: #EDIT: nevermind
+            print(f'Sunspot {i + 1}: {int(regionprops[i].area_filled)} pixels')
 
-    # Save the resulting image
+    # Save the resulting image. Uncomment to also save mask
     # cv2.imwrite(f'{output_folder}/mask_{image_name}.jpg', mask*255)
     cv2.imwrite(f'{output_folder}/output_{image_name}.jpg', border_superposed)
     print(f'Image with borders saved at {output_folder}/output_{image_name}.jpg')
