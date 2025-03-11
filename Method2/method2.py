@@ -114,8 +114,9 @@ def analyze_sunspots(results, min_area, output_folder):
     regionprops = skm.regionprops(labels)
     
     # Filter regions
+    scale_factor = (original_image.shape[0]/1024)**2
     regionprops = [prop for prop in regionprops if 
-                   10000 >= prop.area * 1024/original_image.shape[0] >= min_area] #renormalize area
+                   10000 >= prop.area / scale_factor >= min_area] #renormalize area
     
     # Create border mask
     border_mask = np.zeros_like(original_image)
@@ -147,8 +148,10 @@ def analyze_sunspots(results, min_area, output_folder):
     # Print analysis
     print(f'Number of sunspots: {len(regionprops)}')
     print('')
+
+    
     for i, prop in enumerate(regionprops):
-        print(f'Sunspot {i + 1}: {int(prop.area * 1024/original_image.shape[0])} pixels') #RENORMALIZED AREA
+        print(f'Sunspot {i + 1}: {int(prop.area / scale_factor)} pixels') #RENORMALIZED AREA
     
     # Save results
     img_name = results['image_name']

@@ -15,7 +15,7 @@ def main():
 
     input_path, output_folder, threshold_ratio, min_area \
         = args.input_path, args.output_folder, args.threshold_ratio, args.min_area
-    
+
     image_name = input_path.split("\\")[-1] 
     image_name = image_name.split('/')[-1] #get what is after the last /
     image_name = image_name.split('.')[0]
@@ -27,8 +27,8 @@ def main():
     # also import original image in color
     image_color = cv2.imread(input_path, cv2.IMREAD_COLOR)
 
-    # Calculate mean intensity considering only pixels with intensity > 100
-    bright_pixels = image_array[image_array > 100]
+    # Calculate mean intensity considering only pixels with intensity high enough
+    bright_pixels = image_array[image_array > 25]
     mean_intensity = np.mean(bright_pixels)
 
     # Calculate threshold as alpha * mean_intensity
@@ -47,7 +47,8 @@ def main():
     regionprops = skm.regionprops(labels)
 
     #Filter the regions to keep only relevant ones
-    regionprops = [regionprop for regionprop in regionprops if  10000 >= regionprop.area_filled >= min_area]
+    scale_factor = (image_array.shape[0]/1024)**2
+    regionprops = [regionprop for regionprop in regionprops if  10000 >= regionprop.area_filled/scale_factor >= min_area]
 
     # Create a mask for the borders
     border_mask = np.zeros_like(image_color)
@@ -84,7 +85,7 @@ def main():
     print('')
     for i in range(len(regionprops)):
         if True or i%2 == 0: #EDIT: nevermind
-            print(f'Sunspot {i + 1}: {int(regionprops[i].area_filled)} pixels')
+            print(f'Sunspot {i + 1}: {int(regionprops[i].area_filled)//scale_factor} pixels')
 
     # Save the resulting image. Uncomment to also save mask
     # cv2.imwrite(f'{output_folder}/mask_{image_name}.jpg', mask*255)
