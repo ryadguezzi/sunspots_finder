@@ -80,4 +80,4 @@ The model was unsupervisedly trained on scraped data from NASA.
 
 ## Platform
 
-Code was executed on Python 3.10.0
+Code was executed on Python 3.10.0, Windows64
