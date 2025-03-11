@@ -79,6 +79,7 @@ The model was unsupervisedly trained on scraped data from NASA.
 - Method1 can be useful to label data so that a supervised CNN model may be used instead. 
 
 ## Requirements
-Code was executed with the following versions:
+Code was executed with the following versions, on windows64:
 
 MatPlotLib 3.5.0, Numpy 1.26.4, Scikit-Image 0.21.0, CV2 4.7.0.72, PyTorch 2.5.1+cu118, PIL 11.1.0
+
